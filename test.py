@@ -4,10 +4,11 @@ def menu():
     print("0- Exite")
 
 def game():
-    print("Welcome to the game")
+    print("Welcome to the game/")
     play1 = input("Enter your name for player 1 : ")
     play2 = input("Enter your name for palyer 2 : ")
     bord_indicator()
+    game_logic(play1,play2)
     
     return play1, play2
     
@@ -29,16 +30,57 @@ def bord_indicator():
         
 def validater(num):
     if num.isdigit():
-        return int(num),True
+        num = int(num)
+        if num < 4 and num > 0:
+            return num,True
+        else:
+            print("Enter number between 1 and 3.")
+            return num,False
     else:
+        print("Invalid input")
         return num,False
-        
-                
-def game_logic():
-    while True:
-        print("Player 1 turn")
 
-        row = input("Enter the row number : ")
+def tic_tac_toaValidate(tic):
+    if tic.lower() == "x" or tic.lower() == "o":
+        return True
+    else:
+        print("Invalid input , Enter 'O' or 'x'")
+        return False
+                
+def game_logic(play1,play2):
+    while True:
+        turn = 1 
+        if turn == 1 :
+            print(f"Player 1 turn ({play1})")
+        else :
+            print(f"Player 2 turn ({play2})")
+            
+        while True:
+            row = input("Enter the row number : ")
+            row,validate = validater(row)
+            if validate :
+                break
+        
+        while True:
+            col = input("Enter the column number : ")
+            col,validate = validater(col)
+            if validate :
+                break
+            
+        if list1[row-1][col-1] == 1:
+            while True:
+                tic = input("Enter Noughts and Crosses : ")
+                if tic_tac_toaValidate(tic):
+                    list1[row-1][col-1] = tic.upper()
+                    break
+                else:
+                    continue
+        else:        
+            print("This cell is already occupied. Try again.")
+            continue
+        
+        
+        
 
 
 
