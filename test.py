@@ -7,7 +7,6 @@ def game():
     print("Welcome to the game/")
     play1 = input("Enter your name for player 1 : ")
     play2 = input("Enter your name for palyer 2 : ")
-    bord_indicator()
     game_logic(play1,play2)
     
     return play1, play2
@@ -19,7 +18,7 @@ def bord_indicator():
             if a == 1 :
                 print("   ",end="")
             else:
-                print(a)
+                print(f" {a} ",end="")
             if count < 2:
                 print(" | ",end="")
                 count += 1 
@@ -48,9 +47,10 @@ def tic_tac_toaValidate(tic):
         return False
                 
 def game_logic(play1,play2):
+    turn = 1 
     while True:
-        turn = 1 
-        if turn == 1 :
+        bord_indicator()
+        if turn%2 == 1 :
             print(f"Player 1 turn ({play1})")
         else :
             print(f"Player 2 turn ({play2})")
@@ -79,11 +79,55 @@ def game_logic(play1,play2):
             print("This cell is already occupied. Try again.")
             continue
         
+        if check_win(turn):
+            bord_indicator()
+            break
+        # else:
+        #     continue
+        turn += 1
         
-        
+def check_win(turn):
+    
+    if list1[0][0] == "X" and list1[0][1] == "X" and list1[0][2] == "X":
+        win(turn)
+        return True
+    elif list1[1][0] == "X" and list1[1][1] == "X" and list1[1][2] == "X":
+        win(turn)
+        return True
+    elif list1[2][0] == "X" and list1[2][1] == "X" and list1[2][2] == "X":
+        win(turn)
+        return True
+    elif list1[0][0] == "O" and list1[0][1] == "O" and list1[0][2] == "O":
+        win(turn)
+        return True
+    elif list1[1][0] == "O" and list1[1][1] == "O" and list1[1][2] == "O":
+        win(turn)
+        return True
+    elif list1[2][0] == "O" and list1[2][1] == "O" and list1[2][2] == "O":
+        win(turn)
+        return True
+    elif list1[0][0] == "X" and list1[1][1] == "X" and list1[2][2] == "X":
+        win(turn)
+        return True
+    elif list1[0][0] == "O" and list1[1][1] == "O" and list1[2][2] == "O":
+        win(turn)
+        return True
+    elif list1[0][2] == "O" and list1[1][1] == "O" and list1[2][0] == "O":
+        win(turn)
+        return True
+    elif list1[0][2] == "X" and list1[1][1] == "X" and list1[2][0] == "X":
+        win(turn)
+        return True
+    
 
 
-
+def win(num):
+    if num ==1 :
+        print("Player 1 wins")
+    else:
+        print("Player 2 wins")
+    
+    
 print("Welcome to Tic Tac Toe")
 
 global list1 
@@ -96,6 +140,7 @@ while(True):
     choice = input("Enter your choice: ")
     if choice == "1":
         game()
+        # check_win()
     elif choice == "2":
         pass
     elif choice == "0":
