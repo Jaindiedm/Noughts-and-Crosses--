@@ -1,153 +1,89 @@
-def menu():
-    print("1- Start Game")
-    print("2- View past sessions")
-    print("0- Exite")
+import os
+import validat
 
-def game():
-    print("Welcome to the game/")
-    play1 = input("Enter your name for player 1 : ")
-    play2 = input("Enter your name for palyer 2 : ")
-    game_logic(play1,play2)
-    
-    return play1, play2
-    
-def bord_indicator():
-    for i in list1:
-        count = 0
-        for a in i:
-            if a == 1 :
-                print("   ",end="")
-            else:
-                print(f" {a} ",end="")
-            if count < 2:
-                print(" | ",end="")
-                count += 1 
-            else:
-                continue
-        print("")
-        print("---------------")
-        
-def validater(num):
-    if num.isdigit():
-        num = int(num)
-        if num < 4 and num > 0:
-            return num,True
-        else:
-            print("Enter number between 1 and 3.")
-            return num,False
-    else:
-        print("Invalid input")
-        return num,False
+# Get the current working directory
+cwd = os.getcwd()
 
-def tic_tac_toaValidate(tic):
-    if tic.lower() == "x" or tic.lower() == "o":
-        return True
+# Initialize an empty list to store session file names
+
+def check_files():
+  session_files = []
+  for filename in os.listdir(cwd):
+    # Check if the filename starts with "session" and ends with ".txt"
+    if filename.startswith("session") and filename.endswith(".txt"):
+      session_files.append(filename)  # Add filename to the list
+  return session_files
+
+def save_data(win):
+  
+  session_files = check_files()
+  new_fil_name = ""
+  # Print the list of session files
+  print(session_files)
+  if len(session_files) == 0:
+    print("No session files found")
+    new_fil_name = "session.txt"
+  else:
+    last_element = session_files[-1]
+    if last_element[7] == ".":
+      new_fil_name = "session2.txt"
     else:
-        print("Invalid input , Enter 'O' or 'x'")
-        return False
-                
-def game_logic(play1,play2):
-    turn = 1 
+      last = int(last_element[7])+1
+      new_fil_name = f"session{last}.txt"
+      print(new_fil_name)
+
+
+  # Open the file in write mode ("w")
+  with open(new_fil_name, "w") as file:
+    # Write text to the file
+    count1 = 0
+    count2 = 0
+    countTie =0
+    for i in win :
+      if i == "play1":
+        count1 +=1
+      elif i == "play2":
+        count2 +=1
+      else:
+        countTie +=1
+    file.write(f"Player 1 win {count1} time/s for this session.\n")
+    file.write(f"Player 2 win {count2} time/s for this session.\n")
+    file.write(f"Draws for the session : {countTie}")
+
+def readFile():
+  session_files = check_files()
+  opened =""
+  last_element=""
+  if len(session_files) == 0:
+    print("No session files found")
+  else:
+    print("available Sessions")
+    for i in range(1,len(session_files)+1):
+      print(f"{i}. {session_files[i-1]}")
     while True:
-        bord_indicator()
-        if turn%2 == 1 :
-            print(f"Player 1 turn ({play1})")
-        else :
-            print(f"Player 2 turn ({play2})")
-            
-        while True:
-            row = input("Enter the row number : ")
-            row,validate = validater(row)
-            if validate :
-                break
-        
-        while True:
-            col = input("Enter the column number : ")
-            col,validate = validater(col)
-            if validate :
-                break
-            
-        if list1[row-1][col-1] == 1:
-            while True:
-                tic = input("Enter Noughts and Crosses : ")
-                if tic_tac_toaValidate(tic):
-                    list1[row-1][col-1] = tic.upper()
-                    break
-                else:
-                    continue
-        else:        
-            print("This cell is already occupied. Try again.")
-            continue
-        
-        if check_win(turn):
-            bord_indicator()
-            break
-        # else:
-        #     continue
-        turn += 1
-        
-def check_win(turn):
-    
-    if list1[0][0] == "X" and list1[0][1] == "X" and list1[0][2] == "X":
-        win(turn)
-        return True
-    elif list1[1][0] == "X" and list1[1][1] == "X" and list1[1][2] == "X":
-        win(turn)
-        return True
-    elif list1[2][0] == "X" and list1[2][1] == "X" and list1[2][2] == "X":
-        win(turn)
-        return True
-    elif list1[0][0] == "O" and list1[0][1] == "O" and list1[0][2] == "O":
-        win(turn)
-        return True
-    elif list1[1][0] == "O" and list1[1][1] == "O" and list1[1][2] == "O":
-        win(turn)
-        return True
-    elif list1[2][0] == "O" and list1[2][1] == "O" and list1[2][2] == "O":
-        win(turn)
-        return True
-    elif list1[0][0] == "X" and list1[1][1] == "X" and list1[2][2] == "X":
-        win(turn)
-        return True
-    elif list1[0][0] == "O" and list1[1][1] == "O" and list1[2][2] == "O":
-        win(turn)
-        return True
-    elif list1[0][2] == "O" and list1[1][1] == "O" and list1[2][0] == "O":
-        win(turn)
-        return True
-    elif list1[0][2] == "X" and list1[1][1] == "X" and list1[2][0] == "X":
-        win(turn)
-        return True
-    
-
-
-def win(num):
-    if num ==1 :
-        print("Player 1 wins")
-    else:
-        print("Player 2 wins")
-    
-    
-print("Welcome to Tic Tac Toe")
-
-global list1 
-list1 = [[1 for x in range(3)] for y in range(3)]
-
-while(True):
-    menu()
-    # bord_indicator()
-    # break
-    choice = input("Enter your choice: ")
-    if choice == "1":
-        game()
-        # check_win()
-    elif choice == "2":
-        pass
-    elif choice == "0":
-        print("Exiting Program")
-        exit()
-    else:
-        continue
+      openFile = input("Which session do you want to look: ")
+      passing = len(session_files)+1
+      openFile,validate = validat.validater(openFile,passing)
+      if validate:
+        opened = session_files[openFile-1]
+        last_element = opened
+        if last_element[7] == ".":
+          last_element=1
+        else:
+          last_element = last_element[7]
+        file = open(opened,"r")
+        with file:
+          print(f"Session {last_element}")
+          for line in file:
+            print(line,end="")
+          print("")
+          break
 
 
 
+# readFile()
+
+
+# list1 = ["play2","play1","play1","play2","play1","play2","play1","play1","tie",'tie']
+
+# save_data(list1)
