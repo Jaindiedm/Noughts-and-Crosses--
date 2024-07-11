@@ -1,3 +1,0 @@
-Player 1 win 1 time/s for this session.
-Player 2 win 0 time/s for this session.
-Draws for the session : 0
