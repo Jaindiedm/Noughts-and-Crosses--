@@ -50,7 +50,7 @@ def save_data(win):
 
 def readFile():
     # Reads and displays the contents of a selected session file
-    session_files = check_files()  # Gets the list of session files
+    session_files = check_files(".txt")  # Gets the list of session files
     opened = ""  # Variable to store the selected file name
     last_element = ""  # Variable to store the last session file name
 
