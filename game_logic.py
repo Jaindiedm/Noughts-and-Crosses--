@@ -10,7 +10,7 @@ def menu():
 
 def bord_indicator():
     # Displays the current game board
-    for i in list1:
+    for i in game_list:
         count = 0
         for a in i:
             if a == 1:
@@ -36,8 +36,8 @@ def tic_tac_toaValidate(tic):
 def game_logic(play1, play2, play1Tic, play2Tic):
     # Main game logic, handling turns, input validation, board updates, and win/tie checks
     turn = 1  # Tracks the number of turns
-    global list1
-    list1 = [[1 for x in range(3)] for y in range(3)]  # Initializes the game board with default values
+    global game_list
+    game_list = [[1 for x in range(3)] for y in range(3)]  # Initializes the game board with default values
     while True:
         bord_indicator()
         if turn % 2 == 1:
@@ -57,12 +57,12 @@ def game_logic(play1, play2, play1Tic, play2Tic):
             if validate:
                 break
         
-        if list1[row - 1][col - 1] == 1:
+        if game_list[row - 1][col - 1] == 1:
             # Updates the game board with the player's move
             if turn % 2 == 1:
-                list1[row - 1][col - 1] = play1Tic.upper()
+                game_list[row - 1][col - 1] = play1Tic.upper()
             else:
-                list1[row - 1][col - 1] = play2Tic.upper()
+                game_list[row - 1][col - 1] = play2Tic.upper()
         else:        
             print("This cell is already occupied. Try again.")
             continue
@@ -73,7 +73,7 @@ def game_logic(play1, play2, play1Tic, play2Tic):
                 bord_indicator()
                 if play_again():
                     turn += 1
-                    list1 = [[1 for x in range(3)] for y in range(3)]  # Resets the game board
+                    game_list = [[1 for x in range(3)] for y in range(3)]  # Resets the game board
                     continue
                 else:
                     IsNeedToWriteFile()
@@ -84,7 +84,7 @@ def game_logic(play1, play2, play1Tic, play2Tic):
 def tie():
     # Checks if the game is a tie
     count = 0
-    for i in list1:
+    for i in game_list:
         if 1 not in i:
             count += 1
         else:
@@ -100,31 +100,31 @@ def check_win(turn):
     # Checks for a winning condition
     listx = ["X", "X", "X"]  # Winning condition for player with 'X'
     listo = ["O", "O", "O"]  # Winning condition for player with 'O'
-    if list1[0][0] == "X" and list1[1][1] == "X" and list1[2][2] == "X":
+    if game_list[0][0] == "X" and game_list[1][1] == "X" and game_list[2][2] == "X":
         win(turn)
         return True
-    elif list1[0][0] == "O" and list1[1][1] == "O" and list1[2][2] == "O":
+    elif game_list[0][0] == "O" and game_list[1][1] == "O" and game_list[2][2] == "O":
         win(turn)
         return True
-    elif list1[0][2] == "O" and list1[1][1] == "O" and list1[2][0] == "O":
+    elif game_list[0][2] == "O" and game_list[1][1] == "O" and game_list[2][0] == "O":
         win(turn)
         return True
-    elif list1[0][2] == "X" and list1[1][1] == "X" and list1[2][0] == "X":
+    elif game_list[0][2] == "X" and game_list[1][1] == "X" and game_list[2][0] == "X":
         win(turn)
         return True
-    elif listx in list1 or listo in list1:
+    elif listx in game_list or listo in game_list:
         win(turn)
         return True
     for i in range(0, 3):
         countx = 0 
         countO = 0
         for a in range(0, 3):
-            if list1[a][i] == "X": 
+            if game_list[a][i] == "X": 
                 countx += 1
                 if countx == 3:
                     win(turn)
                     return True
-            elif list1[a][i] == "O":
+            elif game_list[a][i] == "O":
                 countO += 1
                 if countO == 3:
                     win(turn)
@@ -140,8 +140,8 @@ def play_again():
     while True:
         play = input("Do you want to play again? (Y/N): ")
         if play.upper() == "Y":
-            global list1
-            list1 = [[1 for x in range(3)] for y in range(3)]  # Resets the game board
+            global game_list
+            game_list = [[1 for x in range(3)] for y in range(3)]  # Resets the game board
             return True
         elif play.upper() == "N":
             return False
