@@ -163,8 +163,6 @@ def IsNeedToWriteFile():
     if len(win_list) != 0:
         files.save_data(win_list)
         HandleHtml.saveDataOnHTML(win_list)
-    else:
-        print("File not created, Game not finish")
 
 def win(num):
     # Announces the winner and records the win

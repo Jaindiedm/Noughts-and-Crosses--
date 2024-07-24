@@ -4,7 +4,7 @@ def validater(num,endpoint):
         if num < endpoint and num > 0:
             return num,True
         else:
-            print(f"Enter number between 1 and {endpoint}.")
+            print(f"Enter number between 1 and {endpoint-1}.")
             return num,False
     else:
         print("Invalid input")

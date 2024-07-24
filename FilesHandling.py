@@ -16,8 +16,6 @@ def save_data(win):
     # Saves the game session data to a file
     session_files = check_files(".txt")  # Gets the list of session files
     new_fil_name = ""  # Variable to store the new file name
-
-    print(session_files)
     if len(session_files) == 0:
         # print("No session files found")
         new_fil_name = "session.txt"
@@ -56,6 +54,20 @@ def readFile():
 
     if len(session_files) == 0:
         print("No session files found")
+    elif len(session_files) ==1:
+        opened = session_files[0]
+        last_element = opened
+        if last_element[7] == ".":
+            last_element = 1
+        else:
+            last_element = last_element[7]
+        file = open(opened, "r")  # Opens the selected file
+        with file:
+            print(f"Session {last_element}")
+            for line in file:                       
+                print(line, end="")
+            print("")
+            
     else:
         print("Available Sessions")
         for i in range(1, len(session_files) + 1):
