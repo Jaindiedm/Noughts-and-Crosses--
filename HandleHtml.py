@@ -29,8 +29,6 @@ def saveDataOnHTML(win):
             else:
                 countTie += 1
         
-            
-        
         file.write(f"""
 <!DOCTYPE html>
 <html lang="en">
