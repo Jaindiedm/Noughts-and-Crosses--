@@ -15,7 +15,6 @@ def saveDataOnHTML(win):
         else:
             last = int(last_element[7]) + 1
             new_fil_name = f"session{last}.html"
-            print(new_fil_name)
 
     # Writes the game session data to the new file
     with open(new_fil_name, "w") as file:
@@ -29,6 +28,9 @@ def saveDataOnHTML(win):
                 count2 += 1
             else:
                 countTie += 1
+        
+            
+        
         file.write(f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -38,13 +40,16 @@ def saveDataOnHTML(win):
         <title>Home</title>
     </head>
     <body>
-        <h1>Player 1 win {count1} time/s for this session.</h1>
-        <h1>Player 2 win {count2} time/s for this session.</h1>
-        <h1>Draws for the session : {countTie}</h1>
-    </body>
+        <h1>Noughts and Crosses Game Results</h1>\n""")
+        if count1 != 0:
+            file.write(f"<h1>Player 1 win {count1} time/s for this session.</h1>\n")
+        if count2 !=0:
+            file.write(f"<h1>Player 2 win {count2} time/s for this session.</h1>\n")
+        if countTie !=0:
+            file.write(f"<h1>Tie {countTie} time/s for this session.</h1>\n")
+        file.write("""</body>
 </html>
 """)
-
 
     print("Session files created successfully")
 

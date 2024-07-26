@@ -40,10 +40,13 @@ def save_data(win):
                 count2 += 1
             else:
                 countTie += 1
-
-        file.write(f"Player 1 win {count1} time/s for this session.\n")
-        file.write(f"Player 2 win {count2} time/s for this session.\n")
-        file.write(f"Draws for the session : {countTie}")
+        file.write('Noughts and Crosses Game Results.\n')
+        if count1 != 0:
+            file.write(f"Player 1 win {count1} time/s for this session.\n")
+        if count2 != 0:
+            file.write(f"Player 2 win {count2} time/s for this session.\n")
+        if countTie != 0:
+            file.write(f"Draws for the session : {countTie}")
 
 
 def readFile():
